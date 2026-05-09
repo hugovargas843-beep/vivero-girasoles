@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="5Hvg5m99che5VkXu32Mo3lxJnNdx3fvGBlbRTs7JgYw" />
+    <title>Vivero Los Girasoles — Nuevo Laredo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-dark:  #1b3a17;
+            --green-mid:   #2d5a27;
+            --green-light: #4a8044;
+            --green-soft:  #7cb87a;
+            --yellow:      #f5c430;
+            --cream:       #f8f6f2;
+            --white:       #ffffff;
+            --text:        #2c2c2c;
+            --text-light:  #737373;
+            --border:      #e4ddd5;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--cream); overflow-x: hidden; }
+
+        /* ─── NAV ──────────────────────────────────────────────── */
+        nav {
+            position: fixed; inset: 0 0 auto; z-index: 999;
+            padding: 1rem 6%;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background .4s, box-shadow .4s, padding .4s;
+        }
+        nav.scrolled {
+            background: rgba(255,255,255,.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 24px rgba(0,0,0,.07);
+            padding: .65rem 6%;
+        }
+        .nav-logo { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+        .nav-logo-img {
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 2px solid rgba(245,196,48,.55);
+            overflow: hidden; flex-shrink: 0;
+            background: var(--green-mid);
+        }
+        .nav-logo-img img { width: 100%; height: 100%; object-fit: cover; }
+        .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.18rem; font-weight: 700; color: #fff; transition: color .4s; }
+        nav.scrolled .nav-logo-text { color: var(--green-dark); }
+        .nav-logo-text em { font-style: normal; color: var(--yellow); }
+
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: rgba(255,255,255,.85);
+            font-size: .79rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+            transition: color .3s; position: relative;
+        }
+        nav.scrolled .nav-links a { color: var(--text); }
+        .nav-links a::after { content:''; position:absolute; left:0; bottom:-4px; width:0; height:1.5px; background:var(--yellow); transition:width .3s; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-cta { background:var(--yellow)!important; color:var(--green-dark)!important; padding:.48rem 1.2rem!important; border-radius:2px; font-weight:600!important; }
+        .nav-cta::after { display:none!important; }
+
+        .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
+        .hamburger span { display:block; width:24px; height:2px; background:#fff; transition:background .4s; }
+        nav.scrolled .hamburger span { background: var(--green-dark); }
+
+        /* ─── HERO ─────────────────────────────────────────────── */
+        #inicio { height:100vh; min-height:640px; position:relative; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+        .hero-bg {
+            position:absolute; inset:0;
+            background: linear-gradient(155deg, rgba(27,58,23,.94) 0%, rgba(45,90,39,.85) 50%, rgba(74,128,68,.78) 100%),
+                        url('assets/jardin1.jpg') center/cover no-repeat;
+        }
+        .hero-deco { position:absolute; inset:0; pointer-events:none; }
+        .hero-deco circle, .hero-deco ellipse { fill:none; stroke:rgba(255,255,255,.06); }
+
+        .hero-content { position:relative; z-index:2; max-width:760px; padding:0 2rem; }
+        .hero-logo {
+            width:120px; height:120px; border-radius:50%;
+            border:3px solid rgba(245,196,48,.6);
+            background:rgba(255,255,255,.12);
+            backdrop-filter:blur(10px);
+            margin:0 auto 1.8rem;
+            overflow:hidden;
+            animation:fadeUp .8s ease both;
+        }
+        .hero-logo img { width:100%; height:100%; object-fit:cover; }
+
+        .hero-tag { display:inline-flex; align-items:center; gap:.5rem; border:1px solid rgba(245,196,48,.35); background:rgba(245,196,48,.1); color:var(--yellow); font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; padding:.38rem 1.1rem; border-radius:2px; margin-bottom:1.4rem; animation:fadeUp .8s .1s ease both; }
+        .hero-title { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,6.5vw,4.8rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:1.3rem; animation:fadeUp .8s .2s ease both; }
+        .hero-title em { font-style:italic; color:var(--yellow); }
+        .hero-sub { font-size:1.05rem; color:rgba(255,255,255,.68); max-width:500px; margin:0 auto 2.4rem; line-height:1.75; font-weight:300; animation:fadeUp .8s .35s ease both; }
+        .hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; animation:fadeUp .8s .5s ease both; }
+
+        .btn-primary { background:var(--yellow); color:var(--green-dark); padding:.9rem 2.2rem; border-radius:2px; text-decoration:none; font-weight:600; font-size:.9rem; letter-spacing:.06em; border:2px solid var(--yellow); transition:background .3s,color .3s; display:inline-block; }
+        .btn-primary:hover { background:transparent; color:var(--yellow); }
+        .btn-outline { border:2px solid rgba(255,255,255,.45); color:#fff; padding:.9rem 2.2rem; border-radius:2px; text-decoration:none; font-weight:400; font-size:.9rem; letter-spacing:.06em; transition:background .3s; }
+        .btn-outline:hover { background:rgba(255,255,255,.08); }
+
+        .hero-scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.5rem; color:rgba(255,255,255,.38); font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; animation:fadeIn 1s .9s ease both; }
+        .scroll-bar { width:1px; height:48px; background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent); animation:barPulse 2.2s ease infinite; }
+
+        /* ─── SECCIÓN BASE ──────────────────────────────────────── */
+        .section-wrap { padding: 7rem 6%; }
+        .s-label { font-size:.72rem; letter-spacing:.24em; text-transform:uppercase; color:var(--green-soft); font-weight:600; margin-bottom:.7rem; }
+        .s-title { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3.5vw,2.8rem); color:var(--green-dark); font-weight:700; line-height:1.2; }
+        .s-sub { font-size:1rem; color:var(--text-light); line-height:1.75; font-weight:300; max-width:520px; }
+
+        /* ─── NOSOTROS ──────────────────────────────────────────── */
+        #nosotros { background:var(--white); }
+        .nosotros-inner { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:1fr 1.1fr; gap:5rem; align-items:center; }
+        .nos-visual { position:relative; }
+        .nos-img { width:100%; aspect-ratio:4/5; border-radius:3px; overflow:hidden; }
+        .nos-img img { width:100%; height:100%; object-fit:cover; }
+        .nos-badge { position:absolute; bottom:-1.8rem; right:-1.8rem; background:var(--yellow); padding:1.6rem 1.8rem; border-radius:3px; text-align:center; line-height:1; }
+        .nos-badge strong { display:block; font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:700; color:var(--green-dark); }
+        .nos-badge span { font-size:.78rem; color:var(--green-dark); font-weight:500; }
+        .nos-text { padding-top:1rem; }
+        .nos-desc { color:var(--text-light); line-height:1.85; margin:1.4rem 0 2.2rem; font-weight:300; font-size:.98rem; }
+        .nos-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:2.2rem; padding-top:2.2rem; border-top:1px solid var(--border); }
+        .stat strong { display:block; font-family:'Playfair Display',serif; font-size:1.9rem; color:var(--green-mid); font-weight:700; }
+        .stat span { font-size:.76rem; color:var(--text-light); text-transform:uppercase; letter-spacing:.07em; }
+
+        /* ─── SERVICIOS ─────────────────────────────────────────── */
+        #servicios { background:var(--cream); }
+        .servicios-inner { max-width:1160px; margin:0 auto; }
+        .servicios-hdr { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3.5rem; flex-wrap:wrap; gap:1.5rem; }
+        .srv-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(210px,1fr));
+            border:1.5px solid var(--border);
+            background:var(--border);
+            gap:1.5px;
+        }
+        .srv-card { background:var(--white); padding:2.2rem; transition:background .35s; cursor:default; }
+        .srv-card:hover { background:var(--green-dark); }
+        .srv-photo { width:100%; height:145px; border-radius:2px; margin-bottom:1.2rem; overflow:hidden; }
+        .srv-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+        .srv-num { font-size:.7rem; font-weight:700; letter-spacing:.12em; color:var(--border); margin-bottom:.55rem; transition:color .35s; }
+        .srv-card:hover .srv-num { color:rgba(255,255,255,.18); }
+        .srv-card h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--green-dark); margin-bottom:.6rem; transition:color .35s; }
+        .srv-card:hover h3 { color:var(--yellow); }
+        .srv-card p { font-size:.85rem; color:var(--text-light); line-height:1.7; font-weight:300; transition:color .35s; }
+        .srv-card:hover p { color:rgba(255,255,255,.6); }
+
+        /* ─── JARDINES ──────────────────────────────────────────── */
+        #jardines { background:var(--white); }
+        .jardines-inner { max-width:1160px; margin:0 auto; }
+        .jardines-hdr { text-align:center; margin-bottom:3.5rem; }
+        .jardines-hdr .s-sub { margin:.9rem auto 0; }
+
+        .jardines-grid {
+            display:grid;
+            grid-template-columns:1.3fr 1fr;
+            grid-template-rows:270px 270px auto;
+            gap:1rem;
+        }
+        .jcard { position:relative; border-radius:3px; overflow:hidden; }
+        .jcard:first-child { grid-row:span 2; }
+        .jcard.jcard-wide { grid-column:span 2; height:240px; }
+        .jcard img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+        .jcard:hover img { transform:scale(1.05); }
+        .jcard-overlay {
+            position:absolute; inset:0;
+            background:linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 55%);
+            display:flex; align-items:flex-end; padding:1.6rem;
+            opacity:0; transition:opacity .4s;
+        }
+        .jcard:hover .jcard-overlay { opacity:1; }
+        .jcard:first-child .jcard-overlay { opacity:1; }
+        .jcard-label { color:#fff; font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:600; }
+        .jcard-label span { display:block; font-family:'Inter',sans-serif; font-size:.75rem; color:rgba(255,255,255,.65); font-weight:300; margin-top:.2rem; }
+
+        .jardines-cta { text-align:center; margin-top:2.8rem; }
+        .jardines-cta p { color:var(--text-light); margin-bottom:1.2rem; font-size:.9rem; }
+
+        /* ─── PROMOCIONES ──────────────────────────────────────── */
+        #promociones { background:var(--cream); }
+        .promo-inner { max-width:1160px; margin:0 auto; }
+        .promo-hdr { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:end; margin-bottom:3.5rem; }
+
+        .promo-seasonal-note {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--yellow);
+            border-radius: 3px;
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            font-size: .88rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .promo-seasonal-note strong { color: var(--text); }
+        .promo-seasonal-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+        .promo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+        .promo-card { background:var(--white); border:1px solid var(--border); border-radius:3px; overflow:hidden; position:relative; transition:box-shadow .35s,transform .35s; }
+        .promo-card:hover { box-shadow:0 20px 50px rgba(27,58,23,.12); transform:translateY(-6px); }
+        .promo-badge { position:absolute; top:1.1rem; right:1.1rem; background:var(--yellow); color:var(--green-dark); font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.32rem .75rem; border-radius:2px; z-index:2; }
+        .promo-img { width:100%; height:220px; overflow:hidden; position:relative; }
+        .promo-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+        .promo-card:hover .promo-img img { transform:scale(1.04); }
+        .promo-body { padding:1.8rem; }
+        .promo-body h3 { font-family:'Playfair Display',serif; font-size:1.22rem; color:var(--green-dark); margin-bottom:.55rem; }
+        .promo-body p { font-size:.88rem; color:var(--text-light); line-height:1.72; font-weight:300; margin-bottom:1.3rem; }
+        .promo-cta { display:inline-block; background:var(--green-dark); color:#fff; padding:.62rem 1.4rem; border-radius:2px; text-decoration:none; font-size:.82rem; font-weight:600; letter-spacing:.05em; transition:background .3s; }
+        .promo-cta:hover { background:var(--green-mid); }
+
+        .promo-banner { margin-top:2.5rem; background:var(--green-dark); border-radius:3px; padding:2.4rem 3rem; display:flex; justify-content:space-between; align-items:center; gap:2rem; flex-wrap:wrap; }
+        .promo-banner h3 { font-family:'Playfair Display',serif; font-size:1.4rem; color:#fff; margin-bottom:.35rem; }
+        .promo-banner p { font-size:.88rem; color:rgba(255,255,255,.5); font-weight:300; }
+
+        /* ─── MÁS SERVICIOS ─────────────────────────────────────── */
+        #mas-servicios { background:var(--green-dark); }
+        .mas-inner { max-width:1160px; margin:0 auto; }
+        .mas-hdr { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:end; margin-bottom:3.5rem; }
+        .mas-inner .s-label { color:rgba(245,196,48,.65); }
+        .mas-inner .s-title { color:#fff; }
+        .mas-inner .s-sub   { color:rgba(255,255,255,.45); }
+        .mas-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(245px,1fr)); gap:1.8rem; }
+        .mas-card { border:1px solid rgba(255,255,255,.1); padding:2.4rem; border-radius:2px; transition:border-color .35s,background .35s; }
+        .mas-card:hover { border-color:var(--yellow); background:rgba(255,255,255,.03); }
+        .mas-icon { font-size:2rem; margin-bottom:1rem; display:block; }
+        .mas-card h3 { font-family:'Playfair Display',serif; font-size:1.15rem; color:#fff; margin-bottom:.65rem; }
+        .mas-card p { font-size:.88rem; color:rgba(255,255,255,.45); line-height:1.72; font-weight:300; }
+
+        /* ─── TESTIMONIOS ───────────────────────────────────────── */
+        #testimonios { background:var(--white); }
+        .test-inner { max-width:1160px; margin:0 auto; }
+        .test-hdr { text-align:center; margin-bottom:3.8rem; }
+        .test-hdr .s-sub { margin:.9rem auto 0; }
+        .test-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:1.5rem; }
+        .test-card { background:var(--cream); padding:2.4rem; border-radius:2px; border:1px solid var(--border); position:relative; transition:box-shadow .35s,transform .35s; }
+        .test-card:hover { box-shadow:0 16px 40px rgba(27,58,23,.09); transform:translateY(-5px); }
+        .quote { position:absolute; top:1.2rem; right:1.8rem; font-family:'Playfair Display',serif; font-size:5rem; line-height:1; color:var(--yellow); opacity:.25; }
+        .stars { color:var(--yellow); font-size:.85rem; letter-spacing:2px; margin-bottom:.9rem; }
+        .test-text { font-size:.92rem; color:var(--text-light); line-height:1.8; font-style:italic; font-weight:300; margin-bottom:1.6rem; }
+        .test-author { display:flex; align-items:center; gap:.9rem; }
+        .avatar { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--green-mid),var(--green-soft)); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.1rem; color:#fff; font-weight:600; flex-shrink:0; }
+        .author-info strong { display:block; font-size:.88rem; font-weight:600; color:var(--green-dark); }
+        .author-info span   { font-size:.78rem; color:var(--text-light); }
+
+        /* ─── CONTACTO ──────────────────────────────────────────── */
+        #contacto { background:var(--cream); }
+        .contacto-inner { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:1fr 1.3fr; gap:5rem; align-items:start; }
+        .contacto-info .s-sub { margin:1rem 0 2.2rem; }
+        .c-items { display:flex; flex-direction:column; gap:1.4rem; margin-bottom:2.2rem; }
+        .c-item { display:flex; align-items:flex-start; gap:1rem; }
+        .c-icon { width:40px; height:40px; background:var(--white); border:1px solid var(--border); border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+        .c-item strong { display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text); margin-bottom:.2rem; }
+        .c-item p { font-size:.9rem; color:var(--text-light); line-height:1.6; }
+        .c-item a { color:inherit; text-decoration:none; }
+        .c-item a:hover { color:var(--green-mid); }
+        .socials { display:flex; gap:.7rem; }
+        .social { width:38px; height:38px; border:1px solid var(--border); border-radius:2px; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:.82rem; font-weight:700; color:var(--text); transition:all .3s; }
+        .social-fb:hover { background:#1877F2; border-color:#1877F2; color:#fff; }
+
+        .c-form { display:flex; flex-direction:column; gap:1.1rem; }
+        .form-note { font-size:.78rem; color:var(--text-light); background:var(--white); border:1px solid var(--border); border-radius:2px; padding:.8rem 1rem; line-height:1.55; }
+        .form-note strong { color:var(--text); }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+        .form-group { display:flex; flex-direction:column; gap:.35rem; }
+        .form-group label { font-size:.74rem; font-weight:500; text-transform:uppercase; letter-spacing:.08em; color:var(--text); }
+        .form-group input, .form-group textarea, .form-group select {
+            padding:.82rem 1rem; border:1px solid var(--border); border-radius:2px;
+            font-family:'Inter',sans-serif; font-size:.9rem; color:var(--text);
+            background:var(--white); outline:none; transition:border-color .3s; appearance:none;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--green-mid); }
+        .form-group textarea { min-height:120px; resize:vertical; }
+        .btn-submit { align-self:flex-start; background:var(--green-dark); color:#fff; border:2px solid var(--green-dark); padding:.9rem 2.2rem; border-radius:2px; font-family:'Inter',sans-serif; font-size:.88rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:background .3s,color .3s; }
+        .btn-submit:hover { background:transparent; color:var(--green-dark); }
+
+        /* ─── FACEBOOK STRIP ────────────────────────────────────── */
+        .fb-strip { background:#1877F2; padding:1.8rem 6%; text-align:center; }
+        .fb-strip-inner { max-width:700px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:1.4rem; flex-wrap:wrap; }
+        .fb-strip p { color:#fff; font-size:.95rem; }
+        .fb-strip p strong { font-weight:600; }
+        .fb-btn { background:#fff; color:#1877F2; padding:.65rem 1.7rem; border-radius:2px; text-decoration:none; font-weight:700; font-size:.85rem; transition:opacity .3s; flex-shrink:0; }
+        .fb-btn:hover { opacity:.88; }
+
+        /* ─── FOOTER ────────────────────────────────────────────── */
+        footer { background:var(--green-dark); padding:2.8rem 6%; }
+        .footer-inner { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; }
+        .footer-logo { font-family:'Playfair Display',serif; font-size:1.15rem; color:#fff; font-weight:700; }
+        .footer-logo em { font-style:normal; color:var(--yellow); }
+        .footer-links { display:flex; gap:1.8rem; list-style:none; flex-wrap:wrap; }
+        .footer-links a { color:rgba(255,255,255,.45); text-decoration:none; font-size:.82rem; transition:color .3s; }
+        .footer-links a:hover { color:var(--yellow); }
+        .footer-copy { color:rgba(255,255,255,.25); font-size:.78rem; }
+
+        /* ─── ANIMACIONES ───────────────────────────────────────── */
+        .fade-up    { opacity:0; transform:translateY(36px);  transition:opacity .7s ease,transform .7s ease; }
+        .fade-left  { opacity:0; transform:translateX(-36px); transition:opacity .7s ease,transform .7s ease; }
+        .fade-right { opacity:0; transform:translateX(36px);  transition:opacity .7s ease,transform .7s ease; }
+        .fade-up.in, .fade-left.in, .fade-right.in { opacity:1; transform:none; }
+
+        @keyframes fadeUp  { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+        @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+        @keyframes barPulse {
+            0%,100%{transform:scaleY(0);transform-origin:top}
+            45%{transform:scaleY(1);transform-origin:top}
+            55%{transform:scaleY(1);transform-origin:bottom}
+        }
+        @keyframes leafFloat {
+            0%,100%{transform:translateY(0) rotate(0deg)}
+            50%{transform:translateY(-18px) rotate(6deg)}
+        }
+
+        /* ─── RESPONSIVE ────────────────────────────────────────── */
+        @media (max-width:960px) {
+            .nosotros-inner { grid-template-columns:1fr; gap:4rem; }
+            .nos-visual { max-width:380px; margin:0 auto; }
+            .mas-hdr { grid-template-columns:1fr; }
+            .contacto-inner { grid-template-columns:1fr; gap:3rem; }
+            .promo-hdr { grid-template-columns:1fr; }
+        }
+        @media (max-width:720px) {
+            .nav-links { display:none; position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; padding:1.5rem 6%; gap:1.3rem; box-shadow:0 12px 30px rgba(0,0,0,.09); }
+            .nav-links.open { display:flex; }
+            .nav-links a { color:var(--text); }
+            .hamburger { display:flex; }
+            .servicios-hdr { flex-direction:column; align-items:flex-start; }
+            .form-row { grid-template-columns:1fr; }
+            .footer-inner { flex-direction:column; text-align:center; }
+            .footer-links { justify-content:center; }
+            .jardines-grid { grid-template-columns:1fr; grid-template-rows:auto; }
+            .jardines-grid .jcard:first-child { grid-row:span 1; aspect-ratio:4/3; }
+            .jcard { aspect-ratio:4/3; }
+            .jcard.jcard-wide { grid-column:span 1; height:auto; aspect-ratio:4/3; }
+            .promo-banner { flex-direction:column; text-align:center; }
+        }
+        @media (max-width:480px) {
+            .section-wrap { padding:5rem 5%; }
+            .nos-stats { grid-template-columns:1fr 1fr; }
+            .nos-badge { right:0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═════════════════════════════════════════════════════ -->
+<nav id="nav">
+    <a href="#inicio" class="nav-logo">
+        <div class="nav-logo-img">
+            <img src="assets/logo.jpg" alt="Logo Vivero Los Girasoles">
+        </div>
+        <span class="nav-logo-text">Vivero <em>Los Girasoles</em></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#jardines">Jardines</a></li>
+        <li><a href="#promociones">Promociones</a></li>
+        <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+    </ul>
+    <button class="hamburger" id="burger" aria-label="Menú" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- ═══ HERO ═════════════════════════════════════════════════════ -->
+<section id="inicio">
+    <div class="hero-bg"></div>
+    <svg class="hero-deco" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse cx="160"  cy="130"  rx="130" ry="55"  transform="rotate(-30 160 130)"  style="animation:leafFloat 9s ease-in-out infinite"/>
+        <ellipse cx="1320" cy="180"  rx="110" ry="48"  transform="rotate(22 1320 180)"  style="animation:leafFloat 11s ease-in-out 2s infinite"/>
+        <ellipse cx="750"  cy="780"  rx="160" ry="65"  transform="rotate(-8 750 780)"   style="animation:leafFloat 8s ease-in-out 1s infinite"/>
+        <circle  cx="1200" cy="80"   r="200"  opacity=".4"/>
+        <circle  cx="300"  cy="820"  r="280"  opacity=".3"/>
+    </svg>
+    <div class="hero-content">
+        <div class="hero-logo">
+            <img src="assets/logo.jpg" alt="Logo Vivero Los Girasoles">
+        </div>
+        <div class="hero-tag">✦ Nuevo Laredo, Tamaulipas</div>
+        <h1 class="hero-title">Tu jardín merece<br><em>lo mejor</em></h1>
+        <p class="hero-sub">En Vivero Los Girasoles encontrarás plantas, flores y árboles cuidadosamente seleccionados para transformar cada espacio en algo extraordinario.</p>
+        <div class="hero-btns">
+            <a href="#servicios" class="btn-primary">Ver servicios</a>
+            <a href="#contacto"  class="btn-outline">Contáctanos</a>
+        </div>
+    </div>
+    <div class="hero-scroll-hint"><div class="scroll-bar"></div>scroll</div>
+</section>
+
+<!-- ═══ NOSOTROS ══════════════════════════════════════════════ -->
+<section id="nosotros" class="section-wrap">
+    <div class="nosotros-inner">
+        <div class="nos-visual fade-left">
+            <div class="nos-img">
+                <img src="assets/imageninicial.jpg" alt="Vivero Los Girasoles">
+            </div>
+            <div class="nos-badge"><strong>+10</strong><span>años de experiencia</span></div>
+        </div>
+        <div class="nos-text fade-right">
+            <p class="s-label">Sobre Nosotros</p>
+            <h2 class="s-title">Pasión por la<br>naturaleza y el verde</h2>
+            <p class="nos-desc">
+                Somos Vivero Los Girasoles, un espacio dedicado a celebrar la naturaleza en el corazón de Nuevo Laredo. Contamos con una increíble variedad de plantas ornamentales, árboles, cactus y suculentas cuidadosamente seleccionadas para tu hogar o negocio.
+                <br><br>
+                Nuestro equipo te brinda atención cercana y personalizada, siempre dispuesto a asesorarte en el cuidado de cada especie para que construyas un espacio lleno de vida y color.
+            </p>
+            <a href="#contacto" class="btn-primary">Visítanos hoy</a>
+            <div class="nos-stats">
+                <div class="stat"><strong>500+</strong><span>Variedades disponibles</span></div>
+                <div class="stat"><strong>100%</strong><span>Asesoría personalizada</span></div>
+                <div class="stat"><strong>NLD</strong><span>Nuevo Laredo, Tamps.</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ SERVICIOS ════════════════════════════════════════════ -->
+<section id="servicios" class="section-wrap">
+    <div class="servicios-inner">
+        <div class="servicios-hdr">
+            <div class="fade-up">
+                <p class="s-label">Lo que ofrecemos</p>
+                <h2 class="s-title">Nuestros Productos</h2>
+            </div>
+            <p class="s-sub fade-up" style="transition-delay:.12s">De plantas individuales a proyectos completos de jardín, tenemos todo lo que necesitas.</p>
+        </div>
+        <div class="srv-grid">
+            <div class="srv-card fade-up">
+                <div class="srv-num">01</div>
+                <div class="srv-photo"><img src="assets/imagenornamental.jpg" alt="Plantas Ornamentales"></div>
+                <h3>Plantas Ornamentales</h3>
+                <p>Amplia variedad de flores y plantas decorativas para interiores y exteriores, elegidas por su belleza y fácil cuidado.</p>
+            </div>
+            <div class="srv-card fade-up" style="transition-delay:.08s">
+                <div class="srv-num">02</div>
+                <div class="srv-photo"><img src="assets/arbolmango.jpg" alt="Árboles y Arbustos"></div>
+                <h3>Árboles y Arbustos</h3>
+                <p>Árboles frutales, de sombra y ornamentales perfectos para transformar jardines y amplios espacios exteriores.</p>
+            </div>
+            <div class="srv-card fade-up" style="transition-delay:.14s">
+                <div class="srv-num">03</div>
+                <div class="srv-photo"><img src="assets/suculentas2.jpg" alt="Cactus y Suculentas"></div>
+                <h3>Cactus y Suculentas</h3>
+                <p>Colección especial de bajo mantenimiento. Perfectas para climas cálidos y para quienes inician en la jardinería.</p>
+            </div>
+            <div class="srv-card fade-up" style="transition-delay:.2s">
+                <div class="srv-num">04</div>
+                <div class="srv-photo"><img src="assets/pasto-natural.avif" alt="Variedad de Pastos"></div>
+                <h3>Variedad de Tipos de Pasto</h3>
+                <p>Contamos con diferentes tipos: San Agustín, San Agustín Enano y Zoysia. Venta e instalación en rollo para un césped de primera calidad.</p>
+            </div>
+            <div class="srv-card fade-up" style="transition-delay:.26s">
+                <div class="srv-num">05</div>
+                <div class="srv-photo"><img src="assets/pastosintetico2.jpg" alt="Pasto Sintético"></div>
+                <h3>Pasto Sintético</h3>
+                <p>Instalación de pasto artificial de alta calidad. Luce siempre verde, sin riego y sin mantenimiento constante.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ JARDINES ══════════════════════════════════════════════ -->
+<section id="jardines" class="section-wrap">
+    <div class="jardines-inner">
+        <div class="jardines-hdr fade-up">
+            <p class="s-label">Nuestro trabajo</p>
+            <h2 class="s-title">Jardines que Hemos Creado</h2>
+            <p class="s-sub">Cada proyecto es único. Diseñamos e instalamos jardines a la medida para hogares y empresas en Nuevo Laredo.</p>
+        </div>
+        <div class="jardines-grid">
+            <div class="jcard fade-left">
+                <img src="assets/jardin1.jpg" alt="Jardín residencial con sendero de piedra blanca">
+                <div class="jcard-overlay">
+                    <div class="jcard-label">Jardín Residencial
+                        <span>Sendero de piedra blanca y plantas de temporada</span>
+                    </div>
+                </div>
+            </div>
+            <div class="jcard fade-right">
+                <img src="assets/jardin2.jpg" alt="Jardín con palma y plantas ornamentales">
+                <div class="jcard-overlay">
+                    <div class="jcard-label">Jardín con Palma
+                        <span>Palma, suculentas y plantas de color</span>
+                    </div>
+                </div>
+            </div>
+            <div class="jcard fade-right" style="transition-delay:.15s">
+                <img src="assets/pasto-sintetico.jpg" alt="Instalación de pasto sintético">
+                <div class="jcard-overlay">
+                    <div class="jcard-label">Pasto Sintético
+                        <span>Instalación completa con jardineras laterales</span>
+                    </div>
+                </div>
+            </div>
+            <div class="jcard jcard-wide fade-up" style="transition-delay:.2s">
+                <img src="assets/antesdespuesjardin.jpg" alt="Antes y después de jardín interior">
+                <div class="jcard-overlay">
+                    <div class="jcard-label">Antes &amp; Después
+                        <span>Transformación de espacio interior en jardín</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="jardines-cta fade-up">
+            <p>¿Quieres un jardín así? Contáctanos y te damos un presupuesto sin costo.</p>
+            <a href="#contacto" class="btn-primary">Solicitar presupuesto</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PROMOCIONES ═══════════════════════════════════════════ -->
+<section id="promociones" class="section-wrap">
+    <div class="promo-inner">
+        <div class="promo-hdr">
+            <div class="fade-up">
+                <p class="s-label">Ofertas especiales</p>
+                <h2 class="s-title">Promociones</h2>
+            </div>
+            <p class="s-sub fade-up" style="transition-delay:.12s">
+                Creamos arreglos y paquetes especiales para cada temporada del año. Aquí algunos ejemplos de lo que hemos ofrecido.
+            </p>
+        </div>
+
+        <div class="promo-seasonal-note fade-up">
+            <span class="promo-seasonal-icon">📅</span>
+            <div>
+                <strong>Nuestras promociones cambian según la temporada del año.</strong>
+                San Valentín, Día de las Madres, Pascua, Navidad y más — siempre tenemos algo especial preparado.
+                Síguenos en Facebook para ver las ofertas actuales.
+            </div>
+        </div>
+
+        <div class="promo-grid">
+            <div class="promo-card fade-up">
+                <div class="promo-badge">Día de las Madres</div>
+                <div class="promo-img"><img src="assets/diadelasmadres.jpg" alt="Arreglo Día de las Madres"></div>
+                <div class="promo-body">
+                    <h3>Arreglo Día de las Madres</h3>
+                    <p>Globos "Feliz Día Mamá", flores coloridas y detalles especiales para celebrar a mamá. El regalo perfecto que combina naturaleza y cariño.</p>
+                    <a href="https://www.facebook.com/p/Vivero-Los-Girasoles-NLdo-100057190070126/" target="_blank" rel="noopener" class="promo-cta">Ver en Facebook →</a>
+                </div>
+            </div>
+            <div class="promo-card fade-up" style="transition-delay:.1s">
+                <div class="promo-badge">Pascua</div>
+                <div class="promo-img"><img src="assets/promocion-pascua.jpg" alt="Promoción Pascua"></div>
+                <div class="promo-body">
+                    <h3>Sorpresa del Conejo de Pascua</h3>
+                    <p>En la compra de $300 pesos en el vivero, llévate una sorpresa del conejo de Pascua. ¡Una forma divertida de celebrar la temporada con toda la familia!</p>
+                    <a href="tel:+528677192503" class="promo-cta">Llamar para más info →</a>
+                </div>
+            </div>
+            <div class="promo-card fade-up" style="transition-delay:.2s">
+                <div class="promo-badge">San Valentín</div>
+                <div class="promo-img"><img src="assets/promo-san-valentin2.jpg" alt="Mesa de arreglos San Valentín"></div>
+                <div class="promo-body">
+                    <h3>Colección San Valentín</h3>
+                    <p>Variedad de arreglos con flores, globos y detalles para el 14 de Febrero. Disponibles para llevar o con entrega a domicilio en Nuevo Laredo.</p>
+                    <a href="https://www.facebook.com/p/Vivero-Los-Girasoles-NLdo-100057190070126/" target="_blank" rel="noopener" class="promo-cta">Ver en Facebook →</a>
+                </div>
+            </div>
+            <div class="promo-card fade-up" style="transition-delay:.3s">
+                <div class="promo-badge">Semanal</div>
+                <div class="promo-img"><img src="assets/promo-jueves.jpg" alt="Jueves Carretilla 50 pesos"></div>
+                <div class="promo-body">
+                    <h3>Jueves Carretilla — $50</h3>
+                    <p>Todos los jueves, plantas a tan solo $50 pesos. ¡La promo favorita de nuestros clientes! Llega temprano, hay pocas unidades disponibles.</p>
+                    <a href="tel:+528677192503" class="promo-cta">Llamar para más info →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="promo-banner fade-up">
+            <div>
+                <h3>¿Quieres saber qué hay hoy en el vivero?</h3>
+                <p>Síguenos en Facebook o llámanos. Publicamos novedades y promociones de temporada constantemente.</p>
+            </div>
+            <a href="https://www.facebook.com/p/Vivero-Los-Girasoles-NLdo-100057190070126/" target="_blank" rel="noopener" class="btn-primary">Ver Facebook →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ MÁS SERVICIOS ════════════════════════════════════════ -->
+<section id="mas-servicios" class="section-wrap">
+    <div class="mas-inner">
+        <div class="mas-hdr">
+            <div class="fade-up">
+                <p class="s-label">Más que un vivero</p>
+                <h2 class="s-title">Servicios Especializados</h2>
+            </div>
+            <p class="s-sub fade-up" style="transition-delay:.12s">Vamos más allá de la venta de plantas. Te acompañamos en cada etapa de tu proyecto verde.</p>
+        </div>
+        <div class="mas-grid">
+            <div class="mas-card fade-up">
+                <span class="mas-icon">✏️</span>
+                <h3>Diseño de Jardines</h3>
+                <p>Creamos el diseño ideal para tu espacio, combinando estética, funcionalidad y las plantas perfectas para tu clima.</p>
+            </div>
+            <div class="mas-card fade-up" style="transition-delay:.1s">
+                <span class="mas-icon">🔧</span>
+                <h3>Instalación de Jardines</h3>
+                <p>Servicio completo de instalación: desde la preparación del suelo hasta la siembra y primeros cuidados.</p>
+            </div>
+            <div class="mas-card fade-up" style="transition-delay:.2s">
+                <span class="mas-icon">🚚</span>
+                <h3>Entrega a Domicilio</h3>
+                <p>Llevamos tus plantas y materiales directamente a tu hogar o negocio el mismo día en Nuevo Laredo.</p>
+            </div>
+            <div class="mas-card fade-up" style="transition-delay:.3s">
+                <span class="mas-icon">💬</span>
+                <h3>Asesoría Gratuita</h3>
+                <p>Te orientamos sobre riego, fertilización, poda y el cuidado ideal para cada planta, sin ningún costo adicional.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ TESTIMONIOS ════════════════════════════════════════════ -->
+<section id="testimonios" class="section-wrap">
+    <div class="test-inner">
+        <div class="test-hdr fade-up">
+            <p class="s-label">Lo que dicen de nosotros</p>
+            <h2 class="s-title">Testimonios</h2>
+            <p class="s-sub">La satisfacción de nuestros clientes es nuestra mejor carta de presentación.</p>
+        </div>
+        <div class="test-grid">
+            <div class="test-card fade-up">
+                <div class="quote">"</div>
+                <div class="stars">★★★★★</div>
+                <p class="test-text">Excelente vivero, plantas muy saludables y bien cuidadas. El personal es muy amable y te asesora perfectamente. Definitivamente volvería a comprar aquí.</p>
+                <div class="test-author">
+                    <div class="avatar">M</div>
+                    <div class="author-info"><strong>María González</strong><span>Cliente frecuente</span></div>
+                </div>
+            </div>
+            <div class="test-card fade-up" style="transition-delay:.15s">
+                <div class="quote">"</div>
+                <div class="stars">★★★★★</div>
+                <p class="test-text">Contratamos la instalación de pasto y quedó increíble. Trabajo rápido, limpio y muy profesional. Los recomiendo ampliamente para cualquier proyecto de jardín.</p>
+                <div class="test-author">
+                    <div class="avatar">R</div>
+                    <div class="author-info"><strong>Roberto Sánchez</strong><span>Nuevo Laredo, Tamps.</span></div>
+                </div>
+            </div>
+            <div class="test-card fade-up" style="transition-delay:.3s">
+                <div class="quote">"</div>
+                <div class="stars">★★★★★</div>
+                <p class="test-text">Los mejores precios y la mejor atención. Encontré plantas que no había visto en ningún otro vivero de la ciudad. ¡Mi jardín nunca se había visto tan bien!</p>
+                <div class="test-author">
+                    <div class="avatar">A</div>
+                    <div class="author-info"><strong>Ana Ramírez</strong><span>Diseñadora de interiores</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CONTACTO ═════════════════════════════════════════════ -->
+<section id="contacto" class="section-wrap">
+    <div class="contacto-inner">
+        <div class="contacto-info fade-left">
+            <p class="s-label">Estamos para ti</p>
+            <h2 class="s-title">Contáctanos</h2>
+            <p class="s-sub">Visítanos en el vivero o envíanos un mensaje. Con gusto te asesoramos sin costo.</p>
+            <div class="c-items">
+                <div class="c-item">
+                    <div class="c-icon">📍</div>
+                    <div>
+                        <strong>Dirección</strong>
+                        <p>Paseo Colón 3501<br>Nuevo Laredo, Mexico 88260</p>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-icon">📞</div>
+                    <div>
+                        <strong>Teléfono</strong>
+                        <p><a href="tel:+528677192503">867 719 2503</a></p>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-icon">🕐</div>
+                    <div>
+                        <strong>Horario</strong>
+                        <p>Lun – Sáb: 8:00 am – 6:00 pm<br>Domingo: 9:00 am – 2:00 pm</p>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-icon">🚚</div>
+                    <div>
+                        <strong>Entrega a domicilio</strong>
+                        <p>Mismo día en Nuevo Laredo</p>
+                    </div>
+                </div>
+            </div>
+            <div class="socials">
+                <a href="https://www.facebook.com/p/Vivero-Los-Girasoles-NLdo-100057190070126/"
+                   target="_blank" rel="noopener" class="social social-fb" title="Facebook">f</a>
+            </div>
+        </div>
+
+        <form class="c-form fade-right" id="contactForm" onsubmit="handleForm(event)">
+            <div class="form-note">
+                Al enviar se abrirá tu app de correo con el mensaje listo para mandar al vivero.
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="f-nombre" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" id="f-telefono" placeholder="Tu teléfono">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="email" id="f-correo" placeholder="tu@correo.com" required>
+            </div>
+            <div class="form-group">
+                <label>Servicio de interés</label>
+                <select id="f-servicio">
+                    <option value="">Selecciona un servicio…</option>
+                    <option>Plantas Ornamentales</option>
+                    <option>Árboles y Arbustos</option>
+                    <option>Cactus y Suculentas</option>
+                    <option>Pasto San Agustín</option>
+                    <option>Pasto Sintético</option>
+                    <option>Diseño de Jardines</option>
+                    <option>Instalación de Jardines</option>
+                    <option>Asesoría Especializada</option>
+                    <option>Entrega a Domicilio</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Mensaje</label>
+                <textarea id="f-mensaje" placeholder="Cuéntanos en qué podemos ayudarte…"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Enviar mensaje →</button>
+        </form>
+    </div>
+</section>
+
+<!-- ═══ FACEBOOK STRIP ════════════════════════════════════════ -->
+<div class="fb-strip">
+    <div class="fb-strip-inner">
+        <p><strong>¡Síguenos en Facebook!</strong> Fotos de plantas, jardines terminados y promociones de temporada.</p>
+        <a href="https://www.facebook.com/p/Vivero-Los-Girasoles-NLdo-100057190070126/"
+           target="_blank" rel="noopener" class="fb-btn">Seguir en Facebook</a>
+    </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-logo">🌻 Vivero <em>Los Girasoles</em></div>
+        <ul class="footer-links">
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#jardines">Jardines</a></li>
+            <li><a href="#promociones">Promociones</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <p class="footer-copy">© 2025 Vivero Los Girasoles · Nuevo Laredo, Tamaulipas</p>
+    </div>
+</footer>
+
+<script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 70);
+    }, { passive: true });
+
+    function toggleNav() {
+        document.getElementById('navLinks').classList.toggle('open');
+    }
+    document.querySelectorAll('.nav-links a').forEach(a =>
+        a.addEventListener('click', () =>
+            document.getElementById('navLinks').classList.remove('open')
+        )
+    );
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up, .fade-left, .fade-right').forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY + 120;
+        sections.forEach(sec => {
+            const link = document.querySelector(`.nav-links a[href="#${sec.id}"]`);
+            if (!link) return;
+            const inView = y >= sec.offsetTop && y < sec.offsetTop + sec.offsetHeight;
+            link.style.color = inView && nav.classList.contains('scrolled') ? 'var(--green-mid)' : '';
+        });
+    }, { passive: true });
+
+    function handleForm(e) {
+        e.preventDefault();
+        const nombre   = document.getElementById('f-nombre').value.trim();
+        const telefono = document.getElementById('f-telefono').value.trim();
+        const correo   = document.getElementById('f-correo').value.trim();
+        const servicio = document.getElementById('f-servicio').value || 'No especificado';
+        const mensaje  = document.getElementById('f-mensaje').value.trim();
+
+        /* ── Cambia este correo por el del vivero ── */
+        const destino = 'vivero-losgirasoles@hotmail.com';
+
+        const asunto = encodeURIComponent('Contacto web — ' + nombre);
+        const cuerpo = encodeURIComponent(
+            'Nombre: ' + nombre + '\n' +
+            'Teléfono: ' + telefono + '\n' +
+            'Correo: ' + correo + '\n' +
+            'Servicio de interés: ' + servicio + '\n\n' +
+            'Mensaje:\n' + mensaje
+        );
+        window.location.href = 'mailto:' + destino + '?subject=' + asunto + '&body=' + cuerpo;
+
+        const btn = e.target.querySelector('.btn-submit');
+        btn.textContent = '✓ Abriendo correo…';
+        btn.style.cssText = 'background:var(--green-soft);border-color:var(--green-soft);color:#fff';
+        btn.disabled = true;
+        setTimeout(() => {
+            btn.textContent = 'Enviar mensaje →';
+            btn.style.cssText = '';
+            btn.disabled = false;
+        }, 3000);
+    }
+</script>
+</body>
+</html>
